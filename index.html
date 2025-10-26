@@ -34,6 +34,16 @@
                 --table-border-color: #4a5568;
             }
         }
+        
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
 
         body {
             font-family: 'Roboto', sans-serif;
@@ -43,10 +53,11 @@
             margin: 0;
             padding: 20px;
             text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: auto;
             padding: 20px;
             text-align: left;
@@ -62,12 +73,12 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: fixed;
+            font-size: 0.8rem;
         }
 
         th, td {
             border: 1px solid var(--table-border-color);
-            padding: 12px;
+            padding: 8px;
             text-align: left;
             word-break: break-all;
         }
@@ -75,10 +86,11 @@
         th {
             background-color: var(--table-header-bg);
             font-weight: bold;
+            text-align: center;
         }
 
         .calculation {
-            background-color: var(--table-header-bg);
+            background-color: transparent;
             padding: 15px;
             border-radius: 8px;
             margin-top: 20px;
@@ -90,6 +102,26 @@
             font-weight: bold;
             color: var(--header-color);
             margin-top: 10px;
+        }
+
+        #three-container {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+            border: 1px solid var(--table-border-color);
+            border-radius: 8px;
+            background-color: var(--bg-color);
+            cursor: grab;
+        }
+        #three-container:active {
+            cursor: grabbing;
+        }
+
+        .color-picker-container {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
     </style>
 </head>
@@ -105,6 +137,16 @@
         <p>
             このサイトでは、<strong>6cm × 4cm × 3cmの直方体</strong>にバイバインをかけた場合、どれほどの速さで世界が埋め尽くされてしまうのかをシミュレーションします。
         </p>
+
+        <h2>視覚化シミュレーション</h2>
+        <p>
+            これは「バイバイン」によって増殖する、すべての始まりとなる一個の直方体の3Dモデルです。マウスのドラッグ（または指でのスワイプ）で自由に回転させたり、マウスホイール（またはピンチ操作）で拡大・縮小したりして、様々な角度からその形を確認できます。
+        </p>
+        <div class="color-picker-container">
+            <label for="color-picker">モデルの色を変更:</label>
+            <input type="color" id="color-picker" value="#0000ff">
+        </div>
+        <div id="three-container"></div>
         
         <h2>増殖シミュレーション</h2>
         <p>時間の経過とともに、直方体がどれだけ増えるかを見てみましょう。</p>
@@ -116,30 +158,51 @@
                     <th>個数</th>
                     <th>総表面積</th>
                     <th>総体積</th>
+                    <th>総容積</th>
                     <th>比較対象</th>
+                    <th>比較対象 (総表面積)</th>
+                    <th>比較対象 (総体積)</th>
+                    <th>比較対象 (総容積)</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td>0分</td><td>$0$</td><td>$1$</td><td>$108 \text{ cm}^2$</td><td>$72 \text{ cm}^3$</td><td>消しゴム (約5cm x 2cm x 1cm)</td></tr>
-                <tr><td>5分</td><td>$1$</td><td>$2$</td><td>$216 \text{ cm}^2$</td><td>$144 \text{ cm}^3$</td><td>こぶし2つ分 (幅約10cm x 2)</td></tr>
-                <tr><td>10分</td><td>$2$</td><td>$4$</td><td>$432 \text{ cm}^2$</td><td>$288 \text{ cm}^3$</td><td>牛乳パック(小) (200ml)</td></tr>
-                <tr><td>30分</td><td>$6$</td><td>$2^6=64$</td><td>$0.69 \text{ m}^2$</td><td>$4,608 \text{ cm}^3$</td><td>サッカーボール (直径約22cm)</td></tr>
-                <tr><td>1時間</td><td>$12$</td><td>$2^{12} \approx 4.1 \times 10^3$</td><td>$44.2 \text{ m}^2$</td><td>$0.29 \text{ m}^3$</td><td>家庭用冷蔵庫 (容積約0.45m³)</td></tr>
-                <tr><td>3時間</td><td>$36$</td><td>$2^{36} \approx 6.9 \times 10^{10}$</td><td>$742 \text{ km}^2$</td><td>$4.9 \times 10^6 \text{ m}^3$</td><td>東京ドーム 約4個分 (容積約124万m³)</td></tr>
-                <tr><td>6時間</td><td>$72$</td><td>$2^{72} \approx 4.7 \times 10^{21}$</td><td>$5.1 \times 10^{16} \text{ km}^2$</td><td>$3.4 \times 10^{17} \text{ m}^3$</td><td>小惑星イトカワより巨大 (全長約535m)</td></tr>
-                <tr><td>12時間</td><td>$144$</td><td>$2^{144} \approx 10^{43.3}$</td><td>$10^{38.5} \text{ km}^2$</td><td>$10^{39.2} \text{ m}^3$</td><td>太陽を遥かに超越 (直径約139万km)</td></tr>
-                <tr><td>1日</td><td>$288$</td><td>$2^{288} \approx 10^{86.7}$</td><td>$10^{81.9} \text{ km}^2$</td><td>$10^{82.5} \text{ m}^3$</td><td>観測可能な宇宙より大きい (直径約930億光年)</td></tr>
-                <tr><td>3日</td><td>$864$</td><td>$2^{864} \approx 10^{260}$</td><td>$10^{255} \text{ km}^2$</td><td>$10^{255} \text{ m}^3$</td><td>比較不能</td></tr>
-                <tr><td>1週間</td><td>$2,016$</td><td>$2^{2,016} \approx 10^{607}$</td><td>$10^{602} \text{ km}^2$</td><td>$10^{602} \text{ m}^3$</td><td>—</td></tr>
-                <tr><td>1ヶ月</td><td>$8,640$</td><td>$10^{10^{3.41}}$</td><td>$10^{10^{3.41}}$</td><td>$10^{10^{3.41}}$</td><td>—</td></tr>
-                <tr><td>3ヶ月</td><td>$26,280$</td><td>$10^{10^{3.89}}$</td><td>$10^{10^{3.89}}$</td><td>$10^{10^{3.89}}$</td><td>—</td></tr>
-                <tr><td>6ヶ月</td><td>$52,560$</td><td>$10^{10^{4.19}}$</td><td>$10^{10^{4.19}}$</td><td>$10^{10^{4.19}}$</td><td>—</td></tr>
-                <tr><td>1年</td><td>$105,120$</td><td>$10^{10^{4.5}}$</td><td>$10^{10^{4.5}}$</td><td>$10^{10^{4.5}}$</td><td>—</td></tr>
-                <tr><td>3年</td><td>$315,360$</td><td>$10^{10^{4.97}}$</td><td>$10^{10^{4.97}}$</td><td>$10^{10^{4.97}}$</td><td>—</td></tr>
-                <tr><td>5年</td><td>$525,600$</td><td>$10^{10^{5.19}}$</td><td>$10^{10^{5.19}}$</td><td>$10^{10^{5.19}}$</td><td>—</td></tr>
-                <tr><td>10年</td><td>$1,051,200$</td><td>$10^{10^{5.5}}$</td><td>$10^{10^{5.5}}$</td><td>$10^{10^{5.5}}$</td><td>—</td></tr>
-                <tr><td>50年</td><td>$5,256,000$</td><td>$10^{10^{6.19}}$</td><td>$10^{10^{6.19}}$</td><td>$10^{10^{6.19}}$</td><td>—</td></tr>
-                <tr><td>100年</td><td>$10,512,000$</td><td>$10^{10^{6.5}}$</td><td>$10^{10^{6.5}}$</td><td>$10^{10^{6.5}}$</td><td>—</td></tr>
+                <tr><td>0分</td><td>$0$</td><td>$1$</td><td>$108 \text{ cm}^2$</td><td>$72 \text{ cm}^3$</td><td>$72 \text{ ml}$</td><td>消しゴム</td><td>はがき (約$148\text{cm}^2$)</td><td>卵 (約$60\text{cm}^3$)</td><td>ヤクルト (約$65\text{ml}$)</td></tr>
+                <tr><td>5分</td><td>$1$</td><td>$2$</td><td>$216 \text{ cm}^2$</td><td>$144 \text{ cm}^3$</td><td>$144 \text{ ml}$</td><td>こぶし2つ分</td><td>A5用紙 (約$311\text{cm}^2$)</td><td>缶コーヒー (約$190\text{cm}^3$)</td><td>缶コーヒー (約$190\text{ml}$)</td></tr>
+                <tr><td>10分</td><td>$2$</td><td>$4$</td><td>$432 \text{ cm}^2$</td><td>$288 \text{ cm}^3$</td><td>$288 \text{ ml}$</td><td>牛乳パック(小)</td><td>A4用紙 (約$624\text{cm}^2$)</td><td>350ml缶 (約$350\text{cm}^3$)</td><td>350ml缶 (350ml)</td></tr>
+                <tr><td>30分</td><td>$6$</td><td>$64$</td><td>$0.69 \text{ m}^2$</td><td>$4,608 \text{ cm}^3$</td><td>$4.6 \text{ L}$</td><td>サッカーボール</td><td>座布団 (約$0.3\text{m}^2$)</td><td>5号サッカーボール (約$5.5\text{L}$)</td><td>5号サッカーボール (約$5.5\text{L}$)</td></tr>
+                <tr><td>1時間</td><td>$12$</td><td>$2^{12}$</td><td>$44.2 \text{ m}^2$</td><td>$0.29 \text{ m}^3$</td><td>$290 \text{ L}$</td><td>家庭用冷蔵庫</td><td>グランドピアノ (約$8\text{m}^2$)</td><td>ドラム式洗濯機 (約$0.5\text{m}^3$)</td><td>一般家庭浴槽 (約$250\text{L}$)</td></tr>
+                <tr><td>3時間</td><td>$36$</td><td>$2^{36}$</td><td>$742 \text{ km}^2$</td><td>$4.9 \times 10^6 \text{ m}^3$</td><td>$4.9 \times 10^6 \text{ m}^3$</td><td>東京ドーム</td><td>山手線内側の面積 (約$63\text{km}^2$)</td><td>東京ドーム (約$1.24 \times 10^6 \text{m}^3$)</td><td>東京ドーム (約$1.24 \times 10^6 \text{m}^3$)</td></tr>
+                <tr><td>約 4時間50分</td><td>$58$</td><td>$2^{58}$</td><td>$3.1 \times 10^8 \text{ km}^2$</td><td>$2.1 \times 10^{10} \text{ m}^3$</td><td>$2.1 \times 10^{10} \text{ m}^3$</td><td>地球表面</td><td>地球の陸地面積 (約$1.5 \times 10^8 \text{km}^2$)</td><td>琵琶湖 (約$27.5\text{km}^3$)</td><td>琵琶湖 (約$27.5\text{km}^3$)</td></tr>
+                <tr><td>6時間</td><td>$72$</td><td>$2^{72}$</td><td>$5.1 \times 10^{16} \text{ km}^2$</td><td>$3.4 \times 10^{17} \text{ m}^3$</td><td>$3.4 \times 10^{17} \text{ m}^3$</td><td>小惑星</td><td>月 (約$3.8 \times 10^7 \text{km}^2$)</td><td>小惑星イトカワ (約$5.4 \times 10^7 \text{m}^3$)</td><td>小惑星イトカワ (約$5.4 \times 10^7 \text{m}^3$)</td></tr>
+                <tr><td>約 10時間15分</td><td>$123$</td><td>$2^{123}$</td><td>$1.1 \times 10^{32} \text{ km}^2$</td><td>$7.6 \times 10^{32} \text{ m}^3$</td><td>$7.6 \times 10^{32} \text{ m}^3$</td><td>ブラックホール化</td><td>太陽 (約$6.1 \times 10^{12} \text{km}^2$)</td><td>太陽 (約$1.4 \times 10^{27} \text{m}^3$)</td><td>太陽 (約$1.4 \times 10^{27} \text{m}^3$)</td></tr>
+                <tr><td>12時間</td><td>$144$</td><td>$2^{144}$</td><td>$2.4 \times 10^{38} \text{ km}^2$</td><td>$1.6 \times 10^{39} \text{ m}^3$</td><td>$1.6 \times 10^{39} \text{ m}^3$</td><td>恒星</td><td>—</td><td>太陽の約$10^{12}$倍</td><td>太陽の約$10^{12}$倍</td></tr>
+                <tr><td>23時間30分</td><td>$282$</td><td>$2^{282}$</td><td>$4.8 \times 10^{80} \text{ km}^2$</td><td>$3.2 \times 10^{81} \text{ m}^3$</td><td>$3.2 \times 10^{81} \text{ m}^3$</td><td>宇宙</td><td>—</td><td>観測可能な宇宙 (約$4 \times 10^{80}\text{m}^3$)</td><td>観測可能な宇宙 (約$4 \times 10^{80}\text{m}^3$)</td></tr>
+                <tr><td>1日</td><td>$288$</td><td>$2^{288}$</td><td>$3.1 \times 10^{82} \text{ km}^2$</td><td>$2.0 \times 10^{83} \text{ m}^3$</td><td>$2.0 \times 10^{83} \text{ m}^3$</td><td>宇宙の約50倍</td><td>—</td><td>宇宙の約$50$倍</td><td>宇宙の約$50$倍</td></tr>
+                <tr><td>3日</td><td>$864$</td><td>$2^{864}$</td><td>$10^{255} \text{ km}^2$</td><td>$10^{255} \text{ m}^3$</td><td>$10^{255} \text{ m}^3$</td><td>宇宙の約$10^{175}$倍</td><td>—</td><td>宇宙の約$10^{175}$倍</td><td>宇宙の約$10^{175}$倍</td></tr>
+                <tr><td>1週間</td><td>$2,016$</td><td>$2^{2,016}$</td><td>$10^{602} \text{ km}^2$</td><td>$10^{602} \text{ m}^3$</td><td>$10^{602} \text{ m}^3$</td><td>宇宙の約$10^{522}$倍</td><td>—</td><td>宇宙の約$10^{522}$倍</td><td>宇宙の約$10^{522}$倍</td></tr>
+                <tr><td>1ヶ月</td><td>$8,640$</td><td>$10^{10^{3.41}}$</td><td>$10^{10^{3.41}}$</td><td>$10^{10^{3.41}}$</td><td>$10^{10^{3.41}}$</td><td>宇宙の約$10^{2516}$倍</td><td>—</td><td>宇宙の約$10^{2516}$倍</td><td>宇宙の約$10^{2516}$倍</td></tr>
+                <tr><td>3ヶ月</td><td>$26,280$</td><td>$10^{10^{3.89}}$</td><td>$10^{10^{3.89}}$</td><td>$10^{10^{3.89}}$</td><td>$10^{10^{3.89}}$</td><td>宇宙の約$10^{7827}$倍</td><td>—</td><td>宇宙の約$10^{7827}$倍</td><td>宇宙の約$10^{7827}$倍</td></tr>
+                <tr><td>6ヶ月</td><td>$52,560$</td><td>$10^{10^{4.19}}$</td><td>$10^{10^{4.19}}$</td><td>$10^{10^{4.19}}$</td><td>$10^{10^{4.19}}$</td><td>宇宙の約$10^{15740}$倍</td><td>—</td><td>宇宙の約$10^{15740}$倍</td><td>宇宙の約$10^{15740}$倍</td></tr>
+                <tr><td>1年</td><td>$105,120$</td><td>$10^{10^{4.5}}$</td><td>$10^{10^{4.5}}$</td><td>$10^{10^{4.5}}$</td><td>$10^{10^{4.5}}$</td><td>宇宙の約$10^{31560}$倍</td><td>—</td><td>宇宙の約$10^{31560}$倍</td><td>宇宙の約$10^{31560}$倍</td></tr>
+                <tr><td>3年</td><td>$315,360$</td><td>$10^{10^{4.97}}$</td><td>$10^{10^{4.97}}$</td><td>$10^{10^{4.97}}$</td><td>$10^{10^{4.97}}$</td><td>宇宙の約$10^{94849}$倍</td><td>—</td><td>宇宙の約$10^{94849}$倍</td><td>宇宙の約$10^{94849}$倍</td></tr>
+                <tr><td>5年</td><td>$525,600$</td><td>$10^{10^{5.19}}$</td><td>$10^{10^{5.19}}$</td><td>$10^{10^{5.19}}$</td><td>$10^{10^{5.19}}$</td><td>宇宙の約$10^{158138}$倍</td><td>—</td><td>宇宙の約$10^{158138}$倍</td><td>宇宙の約$10^{158138}$倍</td></tr>
+                <tr><td>10年</td><td>$1,051,200$</td><td>$10^{10^{5.5}}$</td><td>$10^{10^{5.5}}$</td><td>$10^{10^{5.5}}$</td><td>$10^{10^{5.5}}$</td><td>宇宙の約$10^{316361}$倍</td><td>—</td><td>宇宙の約$10^{316361}$倍</td><td>宇宙の約$10^{316361}$倍</td></tr>
+                <tr><td>50年</td><td>$5,256,000$</td><td>$10^{10^{6.19}}$</td><td>$10^{10^{6.19}}$</td><td>$10^{10^{6.19}}$</td><td>$10^{10^{6.19}}$</td><td>宇宙の約$10^{1.58 \times 10^6}$倍</td><td>—</td><td>宇宙の約$10^{1.58 \times 10^6}$倍</td><td>宇宙の約$10^{1.58 \times 10^6}$倍</td></tr>
+                <tr><td>100年</td><td>$10,512,000$</td><td>$10^{10^{6.5}}$</td><td>$10^{10^{6.5}}$</td><td>$10^{10^{6.5}}$</td><td>$10^{10^{6.5}}$</td><td>宇宙の約$10^{3.16 \times 10^6}$倍</td><td>—</td><td>宇宙の約$10^{3.16 \times 10^6}$倍</td><td>宇宙の約$10^{3.16 \times 10^6}$倍</td></tr>
+                <tr><td>500年</td><td>$52,560,000$</td><td>$10^{10^{7.19}}$</td><td>$10^{10^{7.19}}$</td><td>$10^{10^{7.19}}$</td><td>$10^{10^{7.19}}$</td><td>宇宙の約$10^{1.58 \times 10^7}$倍</td><td>—</td><td>宇宙の約$10^{1.58 \times 10^7}$倍</td><td>宇宙の約$10^{1.58 \times 10^7}$倍</td></tr>
+                <tr><td>1,000年</td><td>$1.05 \times 10^8$</td><td>$10^{10^{7.5}}$</td><td>$10^{10^{7.5}}$</td><td>$10^{10^{7.5}}$</td><td>$10^{10^{7.5}}$</td><td>宇宙の約$10^{3.16 \times 10^7}$倍</td><td>—</td><td>宇宙の約$10^{3.16 \times 10^7}$倍</td><td>宇宙の約$10^{3.16 \times 10^7}$倍</td></tr>
+                <tr><td>5,000年</td><td>$5.25 \times 10^8$</td><td>$10^{10^{8.19}}$</td><td>$10^{10^{8.19}}$</td><td>$10^{10^{8.19}}$</td><td>$10^{10^{8.19}}$</td><td>宇宙の約$10^{1.58 \times 10^8}$倍</td><td>—</td><td>宇宙の約$10^{1.58 \times 10^8}$倍</td><td>宇宙の約$10^{1.58 \times 10^8}$倍</td></tr>
+                <tr><td>10,000年</td><td>$1.05 \times 10^9$</td><td>$10^{10^{8.5}}$</td><td>$10^{10^{8.5}}$</td><td>$10^{10^{8.5}}$</td><td>$10^{10^{8.5}}$</td><td>宇宙の約$10^{3.16 \times 10^8}$倍</td><td>—</td><td>宇宙の約$10^{3.16 \times 10^8}$倍</td><td>宇宙の約$10^{3.16 \times 10^8}$倍</td></tr>
+                <tr><td>50,000年</td><td>$5.25 \times 10^9$</td><td>$10^{10^{9.19}}$</td><td>$10^{10^{9.19}}$</td><td>$10^{10^{9.19}}$</td><td>$10^{10^{9.19}}$</td><td>宇宙の約$10^{1.58 \times 10^9}$倍</td><td>—</td><td>宇宙の約$10^{1.58 \times 10^9}$倍</td><td>宇宙の約$10^{1.58 \times 10^9}$倍</td></tr>
+                <tr><td>100,000年</td><td>$1.05 \times 10^{10}$</td><td>$10^{10^{9.5}}$</td><td>$10^{10^{9.5}}$</td><td>$10^{10^{9.5}}$</td><td>$10^{10^{9.5}}$</td><td>宇宙の約$10^{3.16 \times 10^9}$倍</td><td>—</td><td>宇宙の約$10^{3.16 \times 10^9}$倍</td><td>宇宙の約$10^{3.16 \times 10^9}$倍</td></tr>
+                <tr><td>500,000年</td><td>$5.25 \times 10^{10}$</td><td>$10^{10^{10.19}}$</td><td>$10^{10^{10.19}}$</td><td>$10^{10^{10.19}}$</td><td>$10^{10^{10.19}}$</td><td>宇宙の約$10^{1.58 \times 10^{10}}$倍</td><td>—</td><td>宇宙の約$10^{1.58 \times 10^{10}}$倍</td><td>宇宙の約$10^{1.58 \times 10^{10}}$倍</td></tr>
+                <tr><td>1,000,000年</td><td>$1.05 \times 10^{11}$</td><td>$10^{10^{10.5}}$</td><td>$10^{10^{10.5}}$</td><td>$10^{10^{10.5}}$</td><td>$10^{10^{10.5}}$</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                <tr><td>10,000,000年</td><td>$1.05 \times 10^{12}$</td><td>$10^{10^{11.5}}$</td><td>$10^{10^{11.5}}$</td><td>$10^{10^{11.5}}$</td><td>$10^{10^{11.5}}$</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                <tr><td>100,000,000年</td><td>$1.05 \times 10^{13}$</td><td>$10^{10^{12.5}}$</td><td>$10^{10^{12.5}}$</td><td>$10^{10^{12.5}}$</td><td>$10^{10^{12.5}}$</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                <tr><td>1,000,000,000年</td><td>$1.05 \times 10^{14}$</td><td>$10^{10^{13.5}}$</td><td>$10^{10^{13.5}}$</td><td>$10^{10^{13.5}}$</td><td>$10^{10^{13.5}}$</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                <tr><td>$10^{10}$年</td><td>$1.05 \times 10^{15}$</td><td>$10^{10^{14.5}}$</td><td>$10^{10^{14.5}}$</td><td>$10^{10^{14.5}}$</td><td>$10^{10^{14.5}}$</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                <tr><td>$10^{11}$年</td><td>$1.05 \times 10^{16}$</td><td>$10^{10^{15.5}}$</td><td>$10^{10^{15.5}}$</td><td>$10^{10^{15.5}}$</td><td>$10^{10^{15.5}}$</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                <tr><td>$10^{12}$年</td><td>$1.05 \times 10^{17}$</td><td>$10^{10^{16.5}}$</td><td>$10^{10^{16.5}}$</td><td>$10^{10^{16.5}}$</td><td>$10^{10^{16.5}}$</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
             </tbody>
         </table>
 
@@ -147,34 +210,37 @@
         <div class="calculation">
             <h3>式</h3>
             <p>1. <strong>基本条件の定義</strong><br>
-            分裂周期 $t_{split} = 5 \text{ min}$<br>
-            分裂回数を $n$ とすると、経過時間 $T = n \times t_{split}$<br>
-            $n$ 回分裂後の直方体の総数 $N_{count}(n) = 2^n$</p>
+            分裂周期を $t_{split}$ とする: $t_{split} = 5 \text{ min}$<br>
+            分裂回数を $n$ とすると、経過時間 $T$ は: $T = n \times t_{split}$<br>
+            $n$ 回分裂後の直方体の総数 $N_{count}(n)$ は: $N_{count}(n) = 2^n$</p>
             <p>2. <strong>対象物のパラメータ定義</strong><br>
-            直方体の寸法: $l=6\text{cm}, w=4\text{cm}, h=3\text{cm}$<br>
+            直方体の各辺の長さ: $l=6\text{cm}, w=4\text{cm}, h=3\text{cm}$<br>
             メートル単位に換算: $l=0.06\text{m}, w=0.04\text{m}, h=0.03\text{m}$<br>
-            直方体1個の底面積 $A_{cuboid} = l \times w = 0.06\text{m} \times 0.04\text{m} = 0.0024 \text{ m}^2$</p>
+            直方体1個の底面積 $A_{cuboid}$ を計算する: $A_{cuboid} = l \times w = 0.06\text{m} \times 0.04\text{m} = 0.0024 \text{ m}^2$</p>
             <p>3. <strong>目標条件の定義</strong><br>
-            地球の総表面積 $A_{earth} \approx 510,065,600 \text{ km}^2$<br>
-            平方メートルに換算: $A_{earth} = 5.100656 \times 10^8 \text{ km}^2 = 5.100656 \times 10^8 \times (10^3 \text{m})^2 = 5.100656 \times 10^{14} \text{ m}^2$</p>
+            地球の総表面積 $A_{earth}$ は: $A_{earth} \approx 510,065,600 \text{ km}^2$<br>
+            平方メートル単位に換算する ($1\text{km} = 1000\text{m}$ なので、$1\text{km}^2 = (1000\text{m})^2 = 10^6\text{m}^2$): <br>
+            $A_{earth} = 5.100656 \times 10^8 \text{ km}^2 = 5.100656 \times 10^8 \times 10^6 \text{m}^2 = 5.100656 \times 10^{14} \text{ m}^2$</p>
             <p>4. <strong>必要個数の計算</strong><br>
-            地球表面を一層覆うのに必要な直方体の個数 $N_{needed}$ は、</p>
-            $$ N_{needed} = \frac{A_{earth}}{A_{cuboid}} = \frac{5.100656 \times 10^{14} \text{ m}^2}{0.0024 \text{ m}^2} = 212,527,333,333,333,333.33... \approx 2.125 \times 10^{17} \text{個} $$
+            地球表面を一層覆うのに必要な直方体の個数 $N_{needed}$ を計算する:</p>
+            $$ N_{needed} = \frac{A_{earth}}{A_{cuboid}} = \frac{5.100656 \times 10^{14} \text{ m}^2}{0.0024 \text{ m}^2} = 212,527,333,333,333,333.33... \approx 2.12527 \times 10^{17} \text{個} $$
             <p>5. <strong>必要分裂回数の計算</strong><br>
             $N_{count}(n) \ge N_{needed}$ となる最小の整数 $n$ を求める。
-            $$ 2^n \ge 2.125 \times 10^{17} $$
+            $$ 2^n \ge 2.12527 \times 10^{17} $$
             両辺の常用対数（$\log_{10}$）をとる。
-            $$ \log_{10}(2^n) \ge \log_{10}(2.125 \times 10^{17}) $$
+            $$ \log_{10}(2^n) \ge \log_{10}(2.12527 \times 10^{17}) $$
             対数の性質 $\log(a^b) = b \log(a)$ と $\log(ab) = \log(a) + \log(b)$ を用いて変形する。
-            $$ n \log_{10}(2) \ge \log_{10}(2.125) + \log_{10}(10^{17}) $$
-            $$ n \log_{10}(2) \ge \log_{10}(2.125) + 17 $$
-            対数の近似値 $\log_{10}(2) \approx 0.30103$ と $\log_{10}(2.125) \approx 0.32735$ を代入する。
-            $$ n \times 0.30103 \ge 0.32735 + 17 $$
-            $$ n \times 0.30103 \ge 17.32735 $$
-            $$ n \ge \frac{17.32735}{0.30103} \approx 57.560... $$
+            $$ n \log_{10}(2) \ge \log_{10}(2.12527) + \log_{10}(10^{17}) $$
+            $$ n \log_{10}(2) \ge \log_{10}(2.12527) + 17 $$
+            対数の近似値 $\log_{10}(2) \approx 0.30103$ と $\log_{10}(2.12527) \approx 0.32741$ を代入する。
+            $$ n \times 0.30103 \ge 0.32741 + 17 $$
+            $$ n \times 0.30103 \ge 17.32741 $$
+            $n$ について解く。
+            $$ n \ge \frac{17.32741}{0.30103} \approx 57.560... $$
             これを満たす最小の整数は $n=58$回。
             <p>6. <strong>所要時間の計算</strong></p>
-            $$ T = n \times t_{split} = 58 \times 5 \text{ min} = 290 \text{ min} = 4 \text{時間} 50 \text{分} $$
+            $$ T = n \times t_{split} = 58 \times 5 \text{ min} = 290 \text{ min} $$
+            $$ 290 \text{ min} = 4 \text{時間} 50 \text{分} $$
             <h3>答え</h3>
             <p class="result">
                 約 <strong>4時間50分</strong> で地球の表面は直方体で一層埋め尽くされます。
@@ -189,17 +255,18 @@
             <p>2. <strong>目標条件の定義</strong><br>
             観測可能な宇宙の体積 $V_{universe} \approx 4 \times 10^{80} \text{ m}^3$</p>
             <p>3. <strong>必要個数の計算</strong><br>
-            宇宙を埋め尽くすのに必要な直方体の個数 $N_{needed}$ は、</p>
+            宇宙を埋め尽くすのに必要な直方体の個数 $N_{needed}$ を計算する:</p>
             $$ N_{needed} = \frac{V_{universe}}{V_{cuboid}} = \frac{4 \times 10^{80} \text{ m}^3}{7.2 \times 10^{-5} \text{ m}^3} = \frac{4}{7.2} \times 10^{85} \approx 0.555... \times 10^{85} = 5.555... \times 10^{84} \text{個} $$
             <p>4. <strong>必要分裂回数の計算</strong><br>
-            $2^n \ge 5.556 \times 10^{84}$ となる最小の整数 $n$ を求める。
-            $$ n \log_{10}(2) \ge \log_{10}(5.556 \times 10^{84}) = \log_{10}(5.556) + 84 $$
-            $\log_{10}(2) \approx 0.30103$ と $\log_{10}(5.556) \approx 0.74476$ を代入する。
-            $$ n \times 0.30103 \ge 0.74476 + 84 = 84.74476 $$
-            $$ n \ge \frac{84.74476}{0.30103} \approx 281.52... $$
+            $2^n \ge 5.555... \times 10^{84}$ となる最小の整数 $n$ を求める。
+            $$ n \log_{10}(2) \ge \log_{10}(5.555... \times 10^{84}) = \log_{10}(5.555...) + 84 $$
+            対数の近似値 $\log_{10}(2) \approx 0.30103$ と $\log_{10}(5.555...) \approx 0.74472$ を代入する。
+            $$ n \times 0.30103 \ge 0.74472 + 84 = 84.74472 $$
+            $$ n \ge \frac{84.74472}{0.30103} \approx 281.52... $$
             これを満たす最小の整数は $n=282$回。
             <p>5. <strong>所要時間の計算</strong></p>
-            $$ T = n \times t_{split} = 282 \times 5 \text{ min} = 1410 \text{ min} = 23 \text{時間} 30 \text{分} $$
+            $$ T = n \times t_{split} = 282 \times 5 \text{ min} = 1410 \text{ min} $$
+            $$ 1410 \text{ min} = 23 \text{時間} 30 \text{分} $$
             <h3>答え</h3>
             <p class="result">
                 わずか <strong>23時間30分</strong> で、観測可能な宇宙は直方体で満たされます。
@@ -217,51 +284,204 @@
             直方体の密度(一般的な岩石と仮定): $\rho = 2700 \text{ kg/m}^3$ <br>
             直方体1個の体積: $V_{cuboid} = 7.2 \times 10^{-5} \text{ m}^3$</p>
             <p>3. <strong>ブラックホール化の条件式</strong><br>
-            $n$回分裂後の集合体を一様な球体と仮定したときの半径 $r(n)$ が、その質量 $M(n)$ におけるシュワルツシルト半径 $R_s(n)$ 以下になること。
+            $n$回分裂後の集合体を一様な球体と仮定したときの半径 $r(n)$ が、その質量 $M(n)$ におけるシュワルツシルト半径 $R_s(n)$ 以下になることが条件となる。
             $$ r(n) \le R_s(n) $$
             4. <strong>半径 $r(n)$ の導出</strong><br>
             $n$回分裂後の総体積 $V_{total}(n) = 2^n \times V_{cuboid}$<br>
-            球の体積の公式 $V_{total} = \frac{4}{3}\pi r^3$ より、
+            球の体積の公式 $V_{total} = \frac{4}{3}\pi r^3$ を $r$ について解くと $r = (\frac{3V_{total}}{4\pi})^{1/3}$ となるため、
             $$ r(n) = \left( \frac{3 V_{total}(n)}{4\pi} \right)^{1/3} = \left( \frac{3 \cdot 2^n V_{cuboid}}{4\pi} \right)^{1/3} $$
             5. <strong>シュワルツシルト半径 $R_s(n)$ の導出</strong><br>
             $n$回分裂後の総質量 $M(n) = \rho \times V_{total}(n) = \rho \cdot 2^n V_{cuboid}$<br>
-            シュワルツシルト半径の公式より、
+            シュワルツシルト半径の公式 $R_s = \frac{2GM}{c^2}$ に代入する。
             $$ R_s(n) = \frac{2GM(n)}{c^2} = \frac{2G(\rho \cdot 2^n V_{cuboid})}{c^2} $$
             6. <strong>不等式の立式と変形</strong><br>
-            条件式 $r(n) \le R_s(n)$ に上記を代入する。
+            条件式 $r(n) \le R_s(n)$ に導出した式を代入する。
             $$ \left( \frac{3 \cdot 2^n V_{cuboid}}{4\pi} \right)^{1/3} \le \frac{2G\rho \cdot 2^n V_{cuboid}}{c^2} $$
             両辺を3乗して根号を外す。
             $$ \frac{3 \cdot 2^n V_{cuboid}}{4\pi} \le \left( \frac{2G\rho \cdot 2^n V_{cuboid}}{c^2} \right)^3 = \frac{8G^3\rho^3 (2^n)^3 V_{cuboid}^3}{c^6} $$
-            両辺を正の値である $2^n V_{cuboid}$ で割り、$n$について整理する。
+            両辺を正の値である $2^n V_{cuboid}$ で割り、不等式を簡略化する。
             $$ \frac{3}{4\pi} \le \frac{8G^3\rho^3 (2^n)^2 V_{cuboid}^2}{c^6} $$
+            この不等式を $(2^n)^2$ について解く。
             $$ (2^n)^2 \ge \frac{3 c^6}{32\pi G^3 \rho^3 V_{cuboid}^2} $$
             7. <strong>右辺の定数項の計算</strong><br>
-            分子: $3c^6 = 3 \times (299,792,458)^6 \approx 3 \times 7.2773 \times 10^{50} \approx 2.1832 \times 10^{51}$ <br>
-            分母の各項: <br>
-            $G^3 \approx (6.67430 \times 10^{-11})^3 \approx 2.9717 \times 10^{-31}$ <br>
+            まず、分子 $3c^6$ を計算する: <br>
+            $3c^6 = 3 \times (299,792,458)^6 = 3 \times (2.99792458 \times 10^8)^6 = 3 \times (2.99792458^6 \times 10^{48}) \approx 3 \times 727.73 \times 10^{48} \approx 2.1832 \times 10^{51}$ <br>
+            次に、分母 $32\pi G^3 \rho^3 V_{cuboid}^2$ の各項を計算する: <br>
+            $G^3 \approx (6.67430 \times 10^{-11})^3 = (6.67430)^3 \times (10^{-11})^3 \approx 297.17 \times 10^{-33} = 2.9717 \times 10^{-31}$ <br>
             $\rho^3 = (2700)^3 = 19,683,000,000 = 1.9683 \times 10^{10}$ <br>
-            $V_{cuboid}^2 = (7.2 \times 10^{-5})^2 = 5.184 \times 10^{-9}$ <br>
+            $V_{cuboid}^2 = (7.2 \times 10^{-5})^2 = 51.84 \times 10^{-10} = 5.184 \times 10^{-9}$ <br>
             $32\pi \approx 32 \times 3.14159265 = 100.530965$ <br>
-            分母全体: $100.530965 \times (2.9717 \times 10^{-31}) \times (1.9683 \times 10^{10}) \times (5.184 \times 10^{-9}) \approx 3.049 \times 10^{-23}$ <br>
-            右辺全体: $\frac{2.1832 \times 10^{51}}{3.049 \times 10^{-23}} \approx 7.1604 \times 10^{73}$
+            分母全体を掛け合わせる: <br>
+            $100.530965 \times (2.9717 \times 10^{-31}) \times (1.9683 \times 10^{10}) \times (5.184 \times 10^{-9}) \approx 3.049 \times 10^{-23}$ <br>
+            最後に、分子を分母で割る: <br>
+            $\frac{2.1832 \times 10^{51}}{3.049 \times 10^{-23}} \approx 7.1604 \times 10^{73}$
             <p>8. <strong>必要分裂回数の計算</strong><br>
-            したがって、不等式は $(2^n)^2 \ge 7.1604 \times 10^{73}$ となる。
+            したがって、解くべき不等式は $(2^n)^2 \ge 7.1604 \times 10^{73}$ となる。
             $$ 2^{2n} \ge 7.1604 \times 10^{73} $$
             両辺の自然対数（$\ln$）をとる。
             $$ \ln(2^{2n}) \ge \ln(7.1604 \times 10^{73}) $$
-            $$ 2n \ln(2) \ge \ln(7.1604) + \ln(10^{73}) = \ln(7.1604) + 73\ln(10) $$
+            $$ 2n \ln(2) \ge \ln(7.1604) + \ln(10^{73}) $$
+            $$ 2n \ln(2) \ge \ln(7.1604) + 73\ln(10) $$
+            $n$ について解く。
+            $$ n \ge \frac{\ln(7.1604) + 73\ln(10)}{2\ln(2)} $$
             対数の近似値 $\ln(2) \approx 0.693147$, $\ln(7.1604) \approx 1.9686$, $\ln(10) \approx 2.302585$ を代入する。
-            $$ 2n \times 0.693147 \ge 1.9686 + 73 \times 2.302585 = 1.9686 + 168.0887 \approx 170.0573 $$
-            $$ 2n \ge \frac{170.0573}{0.693147} \approx 245.345 $$
-            $$ n \ge \frac{245.345}{2} \approx 122.6725 $$
+            $$ n \ge \frac{1.9686 + 73 \times 2.302585}{2 \times 0.693147} \approx \frac{1.9686 + 168.0887}{1.386294} \approx \frac{170.0573}{1.386294} \approx 122.6725 $$
             これを満たす最小の整数は $n=123$回。
             <p>9. <strong>所要時間の計算</strong></p>
-            $$ T = n \times t_{split} = 123 \times 5 \text{ min} = 615 \text{ min} = 10 \text{時間} 15 \text{分} $$
+            $$ T = n \times t_{split} = 123 \times 5 \text{ min} = 615 \text{ min} $$
+            $$ 615 \text{ min} = 10 \text{時間} 15 \text{分} $$
             <h3>答え</h3>
             <p class="result">
                 約 <strong>10時間15分</strong> で直方体惑星は自らの重力に耐えきれず、ブラックホール化する可能性があります。
             </p>
         </div>
     </div>
+
+    <!-- three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- three.js Main Logic -->
+    <script>
+        let scene, camera, renderer, cube, controls, cubeMaterial;
+
+        function init() {
+            // Scene
+            scene = new THREE.Scene();
+            const container = document.getElementById('three-container');
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 10;
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 10, 7.5);
+            scene.add(directionalLight);
+
+            // Cuboid dimensions
+            const cuboidWidth = 6;
+            const cuboidHeight = 4;
+            const cuboidDepth = 3;
+
+            const colorPicker = document.getElementById('color-picker');
+
+            // Cuboid Material (single material for the cube itself)
+            cubeMaterial = new THREE.MeshStandardMaterial({
+                color: colorPicker.value,
+                metalness: 0.3,
+                roughness: 0.6
+            });
+            
+            // Cuboid Geometry and Mesh
+            const geometry = new THREE.BoxGeometry(cuboidWidth, cuboidHeight, cuboidDepth);
+            cube = new THREE.Mesh(geometry, cubeMaterial);
+            scene.add(cube);
+            
+            // Helper function to create text labels as separate meshes
+            function createTextPlane(text, planeWidth, planeHeight) {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                
+                // Set high resolution for clarity
+                const resolution = 256;
+                canvas.width = planeWidth * resolution;
+                canvas.height = planeHeight * resolution;
+
+                context.fillStyle = 'rgba(255, 255, 255, 0.9)'; // Use a high-contrast static color
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                
+                // *** FIX: Dynamic font size calculation to prevent stretching/overflowing ***
+                // Start with a font size proportional to the smaller dimension of the canvas
+                let fontSize = Math.min(canvas.width, canvas.height) * 0.7;
+                context.font = `Bold ${fontSize}px Roboto`;
+                
+                // Reduce font size if the text width is still too large for the canvas width
+                let textWidth = context.measureText(text).width;
+                if (textWidth > canvas.width * 0.95) { // 95% padding
+                     fontSize *= (canvas.width * 0.95) / textWidth;
+                     context.font = `Bold ${fontSize}px Roboto`;
+                }
+                // *** END FIX ***
+                
+                context.fillText(text, canvas.width / 2, canvas.height / 2);
+
+                const texture = new THREE.CanvasTexture(canvas);
+                const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+                const geom = new THREE.PlaneGeometry(planeWidth, planeHeight);
+                const mesh = new THREE.Mesh(geom, material);
+                return mesh;
+            }
+
+            // Create and position text labels, then add them as children of the cube
+            // Match the plane geometry dimensions to the face they represent
+            const labelFront = createTextPlane('6cm', cuboidWidth, cuboidHeight);
+            labelFront.position.z = cuboidDepth / 2 + 0.01;
+            cube.add(labelFront);
+
+            const labelBack = createTextPlane('6cm', cuboidWidth, cuboidHeight);
+            labelBack.position.z = -cuboidDepth / 2 - 0.01;
+            labelBack.rotation.y = Math.PI;
+            cube.add(labelBack);
+
+            const labelTop = createTextPlane('4cm', cuboidWidth, cuboidDepth);
+            labelTop.position.y = cuboidHeight / 2 + 0.01;
+            labelTop.rotation.x = -Math.PI / 2;
+            cube.add(labelTop);
+
+            const labelBottom = createTextPlane('4cm', cuboidWidth, cuboidDepth);
+            labelBottom.position.y = -cuboidHeight / 2 - 0.01;
+            labelBottom.rotation.x = Math.PI / 2;
+            cube.add(labelBottom);
+            
+            const labelRight = createTextPlane('3cm', cuboidDepth, cuboidHeight);
+            labelRight.position.x = cuboidWidth / 2 + 0.01;
+            labelRight.rotation.y = Math.PI / 2;
+            cube.add(labelRight);
+
+            const labelLeft = createTextPlane('3cm', cuboidDepth, cuboidHeight);
+            labelLeft.position.x = -cuboidWidth / 2 - 0.01;
+            labelLeft.rotation.y = -Math.PI / 2;
+            cube.add(labelLeft);
+
+            // Controls
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+
+            // Event Listener for color picker
+            colorPicker.addEventListener('input', (event) => {
+                cubeMaterial.color.set(event.target.value);
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('three-container');
+            if (!container) return;
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        init();
+        animate();
+    </script>
 </body>
 </html>
