@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>バイバインの恐ろしさ</title>
+    
+    <!-- KaTeX and Roboto Font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css" integrity="sha384-WcoG4HRXMzYzfCgiyfrySxx90XSl2rxY5mnVY5TwtWE6KLrArNKn0T/mOgNL0Mmi" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js" integrity="sha384-J+9dG2KMoiR9hqcFao0IBLwxt6zpcyN68IgwzsCSkbreXUjmNVRhPFTssqdSGjwQ" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+
+    <style>
+        /* Light and Dark Theme */
+        :root {
+            --bg-color: #f4f4f9;
+            --text-color: #333;
+            --header-color: #005a9c;
+            --table-header-bg: #e2e8f0;
+            --table-border-color: #cbd5e0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1a202c;
+                --text-color: #e2e8f0;
+                --header-color: #63b3ed;
+                --table-header-bg: #2d3748;
+                --table-border-color: #4a5568;
+            }
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            text-align: left;
+        }
+
+        h1, h2, h3 {
+            color: var(--header-color);
+            border-bottom: 2px solid var(--header-color);
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: fixed;
+        }
+
+        th, td {
+            border: 1px solid var(--table-border-color);
+            padding: 12px;
+            text-align: left;
+            word-break: break-all;
+        }
+
+        th {
+            background-color: var(--table-header-bg);
+            font-weight: bold;
+        }
+
+        .calculation {
+            background-color: var(--table-header-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid var(--table-border-color);
+        }
+        
+        .result {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--header-color);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>バイバインの恐ろしさ：指数関数的増殖の脅威</h1>
+
+        <h2>バイバインとは？</h2>
+        <p>
+            「バイバイン」は、藤子・F・不二雄の漫画『ドラえもん』に登場するひみつ道具です。 液体状の薬品で、これを物体に一滴かけると、5分ごとにその物体が2倍に増殖します。 増えた物体は食べれば消えますが、食べ残したり放置したりすると無限に増え続けてしまいます。
+        </p>
+        <p>
+            このサイトでは、<strong>6cm × 4cm × 3cmの直方体</strong>にバイバインをかけた場合、どれほどの速さで世界が埋め尽くされてしまうのかをシミュレーションします。
+        </p>
+        
+        <h2>増殖シミュレーション</h2>
+        <p>時間の経過とともに、直方体がどれだけ増えるかを見てみましょう。</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>経過時間</th>
+                    <th>分裂回数</th>
+                    <th>個数</th>
+                    <th>総表面積</th>
+                    <th>総体積</th>
+                    <th>比較対象</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>0分</td><td>$0$</td><td>$1$</td><td>$108 \text{ cm}^2$</td><td>$72 \text{ cm}^3$</td><td>消しゴム (約5cm x 2cm x 1cm)</td></tr>
+                <tr><td>5分</td><td>$1$</td><td>$2$</td><td>$216 \text{ cm}^2$</td><td>$144 \text{ cm}^3$</td><td>こぶし2つ分 (幅約10cm x 2)</td></tr>
+                <tr><td>10分</td><td>$2$</td><td>$4$</td><td>$432 \text{ cm}^2$</td><td>$288 \text{ cm}^3$</td><td>牛乳パック(小) (200ml)</td></tr>
+                <tr><td>30分</td><td>$6$</td><td>$2^6=64$</td><td>$0.69 \text{ m}^2$</td><td>$4,608 \text{ cm}^3$</td><td>サッカーボール (直径約22cm)</td></tr>
+                <tr><td>1時間</td><td>$12$</td><td>$2^{12} \approx 4.1 \times 10^3$</td><td>$44.2 \text{ m}^2$</td><td>$0.29 \text{ m}^3$</td><td>家庭用冷蔵庫 (容積約0.45m³)</td></tr>
+                <tr><td>3時間</td><td>$36$</td><td>$2^{36} \approx 6.9 \times 10^{10}$</td><td>$742 \text{ km}^2$</td><td>$4.9 \times 10^6 \text{ m}^3$</td><td>東京ドーム 約4個分 (容積約124万m³)</td></tr>
+                <tr><td>6時間</td><td>$72$</td><td>$2^{72} \approx 4.7 \times 10^{21}$</td><td>$5.1 \times 10^{16} \text{ km}^2$</td><td>$3.4 \times 10^{17} \text{ m}^3$</td><td>小惑星イトカワより巨大 (全長約535m)</td></tr>
+                <tr><td>12時間</td><td>$144$</td><td>$2^{144} \approx 10^{43.3}$</td><td>$10^{38.5} \text{ km}^2$</td><td>$10^{39.2} \text{ m}^3$</td><td>太陽を遥かに超越 (直径約139万km)</td></tr>
+                <tr><td>1日</td><td>$288$</td><td>$2^{288} \approx 10^{86.7}$</td><td>$10^{81.9} \text{ km}^2$</td><td>$10^{82.5} \text{ m}^3$</td><td>観測可能な宇宙より大きい (直径約930億光年)</td></tr>
+                <tr><td>3日</td><td>$864$</td><td>$2^{864} \approx 10^{260}$</td><td>$10^{255} \text{ km}^2$</td><td>$10^{255} \text{ m}^3$</td><td>比較不能</td></tr>
+                <tr><td>1週間</td><td>$2,016$</td><td>$2^{2,016} \approx 10^{607}$</td><td>$10^{602} \text{ km}^2$</td><td>$10^{602} \text{ m}^3$</td><td>—</td></tr>
+                <tr><td>1ヶ月</td><td>$8,640$</td><td>$10^{10^{3.41}}$</td><td>$10^{10^{3.41}}$</td><td>$10^{10^{3.41}}$</td><td>—</td></tr>
+                <tr><td>3ヶ月</td><td>$26,280$</td><td>$10^{10^{3.89}}$</td><td>$10^{10^{3.89}}$</td><td>$10^{10^{3.89}}$</td><td>—</td></tr>
+                <tr><td>6ヶ月</td><td>$52,560$</td><td>$10^{10^{4.19}}$</td><td>$10^{10^{4.19}}$</td><td>$10^{10^{4.19}}$</td><td>—</td></tr>
+                <tr><td>1年</td><td>$105,120$</td><td>$10^{10^{4.5}}$</td><td>$10^{10^{4.5}}$</td><td>$10^{10^{4.5}}$</td><td>—</td></tr>
+                <tr><td>3年</td><td>$315,360$</td><td>$10^{10^{4.97}}$</td><td>$10^{10^{4.97}}$</td><td>$10^{10^{4.97}}$</td><td>—</td></tr>
+                <tr><td>5年</td><td>$525,600$</td><td>$10^{10^{5.19}}$</td><td>$10^{10^{5.19}}$</td><td>$10^{10^{5.19}}$</td><td>—</td></tr>
+                <tr><td>10年</td><td>$1,051,200$</td><td>$10^{10^{5.5}}$</td><td>$10^{10^{5.5}}$</td><td>$10^{10^{5.5}}$</td><td>—</td></tr>
+                <tr><td>50年</td><td>$5,256,000$</td><td>$10^{10^{6.19}}$</td><td>$10^{10^{6.19}}$</td><td>$10^{10^{6.19}}$</td><td>—</td></tr>
+                <tr><td>100年</td><td>$10,512,000$</td><td>$10^{10^{6.5}}$</td><td>$10^{10^{6.5}}$</td><td>$10^{10^{6.5}}$</td><td>—</td></tr>
+            </tbody>
+        </table>
+
+        <h2>地球が埋め尽くされるまでの時間</h2>
+        <div class="calculation">
+            <h3>式</h3>
+            <p>1. <strong>基本条件の定義</strong><br>
+            分裂周期 $t_{split} = 5 \text{ min}$<br>
+            分裂回数を $n$ とすると、経過時間 $T = n \times t_{split}$<br>
+            $n$ 回分裂後の直方体の総数 $N_{count}(n) = 2^n$</p>
+            <p>2. <strong>対象物のパラメータ定義</strong><br>
+            直方体の寸法: $l=6\text{cm}, w=4\text{cm}, h=3\text{cm}$<br>
+            メートル単位に換算: $l=0.06\text{m}, w=0.04\text{m}, h=0.03\text{m}$<br>
+            直方体1個の底面積 $A_{cuboid} = l \times w = 0.06\text{m} \times 0.04\text{m} = 0.0024 \text{ m}^2$</p>
+            <p>3. <strong>目標条件の定義</strong><br>
+            地球の総表面積 $A_{earth} \approx 510,065,600 \text{ km}^2$<br>
+            平方メートルに換算: $A_{earth} = 5.100656 \times 10^8 \text{ km}^2 = 5.100656 \times 10^8 \times (10^3 \text{m})^2 = 5.100656 \times 10^{14} \text{ m}^2$</p>
+            <p>4. <strong>必要個数の計算</strong><br>
+            地球表面を一層覆うのに必要な直方体の個数 $N_{needed}$ は、</p>
+            $$ N_{needed} = \frac{A_{earth}}{A_{cuboid}} = \frac{5.100656 \times 10^{14} \text{ m}^2}{0.0024 \text{ m}^2} = 212,527,333,333,333,333.33... \approx 2.125 \times 10^{17} \text{個} $$
+            <p>5. <strong>必要分裂回数の計算</strong><br>
+            $N_{count}(n) \ge N_{needed}$ となる最小の整数 $n$ を求める。
+            $$ 2^n \ge 2.125 \times 10^{17} $$
+            両辺の常用対数（$\log_{10}$）をとる。
+            $$ \log_{10}(2^n) \ge \log_{10}(2.125 \times 10^{17}) $$
+            対数の性質 $\log(a^b) = b \log(a)$ と $\log(ab) = \log(a) + \log(b)$ を用いて変形する。
+            $$ n \log_{10}(2) \ge \log_{10}(2.125) + \log_{10}(10^{17}) $$
+            $$ n \log_{10}(2) \ge \log_{10}(2.125) + 17 $$
+            対数の近似値 $\log_{10}(2) \approx 0.30103$ と $\log_{10}(2.125) \approx 0.32735$ を代入する。
+            $$ n \times 0.30103 \ge 0.32735 + 17 $$
+            $$ n \times 0.30103 \ge 17.32735 $$
+            $$ n \ge \frac{17.32735}{0.30103} \approx 57.560... $$
+            これを満たす最小の整数は $n=58$回。
+            <p>6. <strong>所要時間の計算</strong></p>
+            $$ T = n \times t_{split} = 58 \times 5 \text{ min} = 290 \text{ min} = 4 \text{時間} 50 \text{分} $$
+            <h3>答え</h3>
+            <p class="result">
+                約 <strong>4時間50分</strong> で地球の表面は直方体で一層埋め尽くされます。
+            </p>
+        </div>
+
+        <h2>観測可能な宇宙が埋め尽くされるまでの時間</h2>
+        <div class="calculation">
+            <h3>式</h3>
+            <p>1. <strong>対象物のパラメータ定義</strong><br>
+            直方体1個の体積 $V_{cuboid} = l \times w \times h = 0.06\text{m} \times 0.04\text{m} \times 0.03\text{m} = 0.000072 \text{ m}^3 = 7.2 \times 10^{-5} \text{ m}^3$</p>
+            <p>2. <strong>目標条件の定義</strong><br>
+            観測可能な宇宙の体積 $V_{universe} \approx 4 \times 10^{80} \text{ m}^3$</p>
+            <p>3. <strong>必要個数の計算</strong><br>
+            宇宙を埋め尽くすのに必要な直方体の個数 $N_{needed}$ は、</p>
+            $$ N_{needed} = \frac{V_{universe}}{V_{cuboid}} = \frac{4 \times 10^{80} \text{ m}^3}{7.2 \times 10^{-5} \text{ m}^3} = \frac{4}{7.2} \times 10^{85} \approx 0.555... \times 10^{85} = 5.555... \times 10^{84} \text{個} $$
+            <p>4. <strong>必要分裂回数の計算</strong><br>
+            $2^n \ge 5.556 \times 10^{84}$ となる最小の整数 $n$ を求める。
+            $$ n \log_{10}(2) \ge \log_{10}(5.556 \times 10^{84}) = \log_{10}(5.556) + 84 $$
+            $\log_{10}(2) \approx 0.30103$ と $\log_{10}(5.556) \approx 0.74476$ を代入する。
+            $$ n \times 0.30103 \ge 0.74476 + 84 = 84.74476 $$
+            $$ n \ge \frac{84.74476}{0.30103} \approx 281.52... $$
+            これを満たす最小の整数は $n=282$回。
+            <p>5. <strong>所要時間の計算</strong></p>
+            $$ T = n \times t_{split} = 282 \times 5 \text{ min} = 1410 \text{ min} = 23 \text{時間} 30 \text{分} $$
+            <h3>答え</h3>
+            <p class="result">
+                わずか <strong>23時間30分</strong> で、観測可能な宇宙は直方体で満たされます。
+            </p>
+        </div>
+
+        <h2>最終形態：ブラックホール化の可能性</h2>
+        <div class="calculation">
+            <h3>式</h3>
+            <p>1. <strong>物理定数の定義</strong><br>
+            光速: $c = 299,792,458 \text{ m/s}$ <br>
+            万有引力定数: $G \approx 6.67430 \times 10^{-11} \text{ m}^3\text{kg}^{-1}\text{s}^{-2}$ <br>
+            円周率: $\pi \approx 3.1415926535$</p>
+            <p>2. <strong>対象物のパラメータ定義</strong><br>
+            直方体の密度(一般的な岩石と仮定): $\rho = 2700 \text{ kg/m}^3$ <br>
+            直方体1個の体積: $V_{cuboid} = 7.2 \times 10^{-5} \text{ m}^3$</p>
+            <p>3. <strong>ブラックホール化の条件式</strong><br>
+            $n$回分裂後の集合体を一様な球体と仮定したときの半径 $r(n)$ が、その質量 $M(n)$ におけるシュワルツシルト半径 $R_s(n)$ 以下になること。
+            $$ r(n) \le R_s(n) $$
+            4. <strong>半径 $r(n)$ の導出</strong><br>
+            $n$回分裂後の総体積 $V_{total}(n) = 2^n \times V_{cuboid}$<br>
+            球の体積の公式 $V_{total} = \frac{4}{3}\pi r^3$ より、
+            $$ r(n) = \left( \frac{3 V_{total}(n)}{4\pi} \right)^{1/3} = \left( \frac{3 \cdot 2^n V_{cuboid}}{4\pi} \right)^{1/3} $$
+            5. <strong>シュワルツシルト半径 $R_s(n)$ の導出</strong><br>
+            $n$回分裂後の総質量 $M(n) = \rho \times V_{total}(n) = \rho \cdot 2^n V_{cuboid}$<br>
+            シュワルツシルト半径の公式より、
+            $$ R_s(n) = \frac{2GM(n)}{c^2} = \frac{2G(\rho \cdot 2^n V_{cuboid})}{c^2} $$
+            6. <strong>不等式の立式と変形</strong><br>
+            条件式 $r(n) \le R_s(n)$ に上記を代入する。
+            $$ \left( \frac{3 \cdot 2^n V_{cuboid}}{4\pi} \right)^{1/3} \le \frac{2G\rho \cdot 2^n V_{cuboid}}{c^2} $$
+            両辺を3乗して根号を外す。
+            $$ \frac{3 \cdot 2^n V_{cuboid}}{4\pi} \le \left( \frac{2G\rho \cdot 2^n V_{cuboid}}{c^2} \right)^3 = \frac{8G^3\rho^3 (2^n)^3 V_{cuboid}^3}{c^6} $$
+            両辺を正の値である $2^n V_{cuboid}$ で割り、$n$について整理する。
+            $$ \frac{3}{4\pi} \le \frac{8G^3\rho^3 (2^n)^2 V_{cuboid}^2}{c^6} $$
+            $$ (2^n)^2 \ge \frac{3 c^6}{32\pi G^3 \rho^3 V_{cuboid}^2} $$
+            7. <strong>右辺の定数項の計算</strong><br>
+            分子: $3c^6 = 3 \times (299,792,458)^6 \approx 3 \times 7.2773 \times 10^{50} \approx 2.1832 \times 10^{51}$ <br>
+            分母の各項: <br>
+            $G^3 \approx (6.67430 \times 10^{-11})^3 \approx 2.9717 \times 10^{-31}$ <br>
+            $\rho^3 = (2700)^3 = 19,683,000,000 = 1.9683 \times 10^{10}$ <br>
+            $V_{cuboid}^2 = (7.2 \times 10^{-5})^2 = 5.184 \times 10^{-9}$ <br>
+            $32\pi \approx 32 \times 3.14159265 = 100.530965$ <br>
+            分母全体: $100.530965 \times (2.9717 \times 10^{-31}) \times (1.9683 \times 10^{10}) \times (5.184 \times 10^{-9}) \approx 3.049 \times 10^{-23}$ <br>
+            右辺全体: $\frac{2.1832 \times 10^{51}}{3.049 \times 10^{-23}} \approx 7.1604 \times 10^{73}$
+            <p>8. <strong>必要分裂回数の計算</strong><br>
+            したがって、不等式は $(2^n)^2 \ge 7.1604 \times 10^{73}$ となる。
+            $$ 2^{2n} \ge 7.1604 \times 10^{73} $$
+            両辺の自然対数（$\ln$）をとる。
+            $$ \ln(2^{2n}) \ge \ln(7.1604 \times 10^{73}) $$
+            $$ 2n \ln(2) \ge \ln(7.1604) + \ln(10^{73}) = \ln(7.1604) + 73\ln(10) $$
+            対数の近似値 $\ln(2) \approx 0.693147$, $\ln(7.1604) \approx 1.9686$, $\ln(10) \approx 2.302585$ を代入する。
+            $$ 2n \times 0.693147 \ge 1.9686 + 73 \times 2.302585 = 1.9686 + 168.0887 \approx 170.0573 $$
+            $$ 2n \ge \frac{170.0573}{0.693147} \approx 245.345 $$
+            $$ n \ge \frac{245.345}{2} \approx 122.6725 $$
+            これを満たす最小の整数は $n=123$回。
+            <p>9. <strong>所要時間の計算</strong></p>
+            $$ T = n \times t_{split} = 123 \times 5 \text{ min} = 615 \text{ min} = 10 \text{時間} 15 \text{分} $$
+            <h3>答え</h3>
+            <p class="result">
+                約 <strong>10時間15分</strong> で直方体惑星は自らの重力に耐えきれず、ブラックホール化する可能性があります。
+            </p>
+        </div>
+    </div>
+</body>
+</html>
